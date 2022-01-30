@@ -16,9 +16,9 @@ import java.util.Optional;
 @Component
 public class RecipeBootStrap implements ApplicationListener<ContextRefreshedEvent> {
 
-    private CategoryRepository categoryRepository;
-    private RecipeRepository recipeRepository;
-    private UnitOfMeasureRepository unitOfMeasureRepository;
+    private final CategoryRepository categoryRepository;
+    private final RecipeRepository recipeRepository;
+    private final UnitOfMeasureRepository unitOfMeasureRepository;
 
     public RecipeBootStrap(CategoryRepository categoryRepository, RecipeRepository recipeRepository, UnitOfMeasureRepository unitOfMeasureRepository) {
         this.categoryRepository = categoryRepository;
@@ -36,27 +36,27 @@ public class RecipeBootStrap implements ApplicationListener<ContextRefreshedEven
         List<Recipe> recipes = new ArrayList<>(2);
 
         Optional<UnitOfMeasure> swadUomOptional = unitOfMeasureRepository.findByDescription("Swad Anusar");
-        if (!swadUomOptional.isPresent()){
+        if (swadUomOptional.isEmpty()){
             throw new RuntimeException("Expected UOM Swad Anusar not found");
         }
 
         Optional<UnitOfMeasure> pinchUomOptional = unitOfMeasureRepository.findByDescription("Pinch");
-        if (!pinchUomOptional.isPresent()){
+        if (pinchUomOptional.isEmpty()){
             throw new RuntimeException("Expected UOM Pinch not found");
         }
 
         Optional<UnitOfMeasure> cupUomOptional = unitOfMeasureRepository.findByDescription("Cup");
-        if (!cupUomOptional.isPresent()){
+        if (cupUomOptional.isEmpty()){
             throw new RuntimeException("Expected UOM Cup not found");
         }
 
         Optional<UnitOfMeasure> teaSpoonUomOptional = unitOfMeasureRepository.findByDescription("Teaspoon");
-        if (!teaSpoonUomOptional.isPresent()){
+        if (teaSpoonUomOptional.isEmpty()){
             throw new RuntimeException("Expected UOM Teaspoon not found");
         }
 
         Optional<UnitOfMeasure> tableSpoonUomOptional = unitOfMeasureRepository.findByDescription("Tablespoon");
-        if (!tableSpoonUomOptional.isPresent()){
+        if (tableSpoonUomOptional.isEmpty()){
             throw new RuntimeException("Expected UOM Tablespoon not found");
         }
 
@@ -68,13 +68,13 @@ public class RecipeBootStrap implements ApplicationListener<ContextRefreshedEven
 
         Optional<Category> punjabiCategoryOptional = categoryRepository.findByDescription("Punjabi");
 
-        if(!punjabiCategoryOptional.isPresent()){
+        if(punjabiCategoryOptional.isEmpty()){
             throw new RuntimeException("Expected Category Not Found");
         }
 
         Optional<Category> mexicanCategoryOptional = categoryRepository.findByDescription("Mexican");
 
-        if(!mexicanCategoryOptional.isPresent()){
+        if(mexicanCategoryOptional.isEmpty()){
             throw new RuntimeException("Expected Category Not Found");
         }
 
