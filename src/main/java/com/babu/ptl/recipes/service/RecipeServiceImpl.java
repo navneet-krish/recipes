@@ -6,6 +6,7 @@ import com.babu.ptl.recipes.service.recipeservice.RecipeService;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -21,5 +22,16 @@ public class RecipeServiceImpl implements RecipeService {
         Set<Recipe> recipeSet = new HashSet<>();
         recipeRepository.findAll().iterator().forEachRemaining(recipeSet::add);
         return recipeSet;
+    }
+
+    @Override
+    public Recipe findById(long l) {
+        Optional<Recipe> optionalRecipe = recipeRepository.findById(l);
+
+        if(!optionalRecipe.isPresent())
+        {
+            throw new RuntimeException();
+        }
+        return optionalRecipe.get();
     }
 }

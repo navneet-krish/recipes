@@ -2,6 +2,7 @@ package com.babu.ptl.recipes.service;
 
 import com.babu.ptl.recipes.domain.Recipe;
 import com.babu.ptl.recipes.repositories.RecipeRepository;
+import com.babu.ptl.recipes.service.recipeservice.RecipeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -27,6 +28,22 @@ class testRecipeServiceImplTest {
 
           recipeService = new RecipeServiceImpl(recipeRepository);
 
+    }
+
+    @Test
+    public void getRecipeByIdTest(){
+        Recipe recipe = new Recipe();
+        recipe.setId(1l);
+        Optional<Recipe> recipeOptional = Optional.of(recipe);
+
+        when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+
+        Recipe returnedRecipe = recipeService.findById(1l);
+
+        assertNotNull(returnedRecipe);
+        assertNotNull(returnedRecipe,"Null Recipe Returned");
+        verify(recipeRepository).findById(anyLong());
+        verify(recipeRepository, never()).findAll();
     }
 
     @Test
