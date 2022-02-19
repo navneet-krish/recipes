@@ -15,7 +15,7 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class testRecipeServiceImplTest {
+class testRecipeServiceImpl {
 
     RecipeServiceImpl recipeService;
 
@@ -33,12 +33,12 @@ class testRecipeServiceImplTest {
     @Test
     public void getRecipeByIdTest(){
         Recipe recipe = new Recipe();
-        recipe.setId(1l);
+        recipe.setId(1L);
         Optional<Recipe> recipeOptional = Optional.of(recipe);
 
         when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
 
-        Recipe returnedRecipe = recipeService.findById(1l);
+        Recipe returnedRecipe = recipeService.findById(1L);
 
         assertNotNull(returnedRecipe);
         assertNotNull(returnedRecipe,"Null Recipe Returned");
