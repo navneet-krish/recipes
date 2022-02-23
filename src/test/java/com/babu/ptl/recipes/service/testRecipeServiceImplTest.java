@@ -1,8 +1,9 @@
 package com.babu.ptl.recipes.service;
 
+import com.babu.ptl.recipes.converters.RecipeCommandToRecipe;
+import com.babu.ptl.recipes.converters.RecipeToRecipeCommand;
 import com.babu.ptl.recipes.domain.Recipe;
 import com.babu.ptl.recipes.repositories.RecipeRepository;
-import com.babu.ptl.recipes.service.recipeservice.RecipeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -20,13 +21,19 @@ class testRecipeServiceImpl {
     RecipeServiceImpl recipeService;
 
     @Mock
+    RecipeToRecipeCommand recipeToRecipeCommand;
+
+    @Mock
+    RecipeCommandToRecipe recipeCommandToRecipe;
+
+    @Mock
     RecipeRepository recipeRepository;
 
     @BeforeEach
     void setUp() {
             MockitoAnnotations.openMocks(this);
 
-          recipeService = new RecipeServiceImpl(recipeRepository);
+          recipeService = new RecipeServiceImpl(recipeRepository, recipeCommandToRecipe, recipeToRecipeCommand);
 
     }
 
@@ -60,6 +67,11 @@ class testRecipeServiceImpl {
         assertEquals(recipes.size(), 1);
         verify(recipeRepository, times(1)).findAll();
 
+
+    }
+
+    @Test
+    void saveRecipe(){
 
     }
 }
