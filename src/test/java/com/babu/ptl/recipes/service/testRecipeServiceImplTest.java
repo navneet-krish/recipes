@@ -74,4 +74,12 @@ class testRecipeServiceImpl {
     void saveRecipe(){
 
     }
+
+    @Test
+    void deleteRecipeById(){
+        Long idToDelete = Long.valueOf(2l);
+        recipeService.deleteById(idToDelete);
+
+        verify(recipeRepository, times(1)).deleteById(anyLong());
+    }
 }
