@@ -18,7 +18,7 @@
 
 </head>
 <body>
-<!--/*@thymesVar id="recipe" type="com.babu.ptl.recipes.domain.recipe"*/-->
+<!--/*@thymesVar id="recipe" type="com.babu.ptl.recipes.domain.Recipe"*/-->
 <div class="container-fluid" style="margin-top: 20px">
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
@@ -86,7 +86,14 @@
                 </div>
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <h1 class="panel-title" >Ingredients</h1>
+                        <div class="row">
+                            <div class="col-md-11 ">
+                                 <h1 class="panel-title" >Ingredients</h1>
+                            </div>
+                             <div class="col-md-1">
+                                <a class="btn btn-default" href="#" th:href="@{'/recipe/' + ${recipe.id} + '/ingredients'}" role="button">View</a>
+                             </div>
+                        </div>
                     </div>
                     <div class="panel-body">
                         <div class="row">

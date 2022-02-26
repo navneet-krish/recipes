@@ -2,10 +2,13 @@ package com.babu.ptl.recipes.controller;
 
 import com.babu.ptl.recipes.commands.RecipeCommand;
 import com.babu.ptl.recipes.service.recipeservice.RecipeService;
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @Controller
 public class RecipeController {
 
@@ -50,7 +53,7 @@ public class RecipeController {
     @GetMapping
     @RequestMapping("recipe/{id}/delete")
     public String deleteById(@PathVariable String id){
-     //   log.debug("deleting id " + id);
+        log.debug("deleting a recipe");
         recipeService.deleteById(Long.valueOf(id));
         return "redirect:/";
     }
