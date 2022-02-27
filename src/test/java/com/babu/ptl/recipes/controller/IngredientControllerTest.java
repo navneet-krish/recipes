@@ -1,6 +1,8 @@
 package com.babu.ptl.recipes.controller;
 
+import com.babu.ptl.recipes.commands.IngredientCommand;
 import com.babu.ptl.recipes.commands.RecipeCommand;
+import com.babu.ptl.recipes.service.recipeservice.IngredientService;
 import com.babu.ptl.recipes.service.recipeservice.RecipeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,6 +20,8 @@ public class IngredientControllerTest {
 
     @Mock
     RecipeService recipeService;
+    @Mock
+    IngredientService ingredientService;
 
     IngredientController ingredientController;
 
@@ -27,7 +31,7 @@ public class IngredientControllerTest {
     public void setUp(){
         MockitoAnnotations.openMocks(this);
 
-        ingredientController = new IngredientController(recipeService);
+        ingredientController = new IngredientController(recipeService, ingredientService);
         mockMvc = MockMvcBuilders.standaloneSetup(ingredientController).build();
     }
 
@@ -42,5 +46,16 @@ public class IngredientControllerTest {
                 .andExpect(model().attributeExists("recipe"));
 
         verify(recipeService,times(1)).findCommandById(anyLong());
+    }
+
+    @Test
+    public void testShowIngredient() throws Exception {
+        IngredientCommand ingredientCommand = new IngredientCommand();
+        when(ingredientService.findByRecipeIdAndIngredientId(anyLong(), anyLong())).thenReturn(ingredientCommand);
+
+        mockMvc.perform(get("/recipe/1/ingredients/2/show"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("recipe/ingredient/show"))
+                .andExpect(model().attributeExists("ingredient"));
     }
 }
