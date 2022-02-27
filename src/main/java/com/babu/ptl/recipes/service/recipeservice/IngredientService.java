@@ -9,13 +9,13 @@ import java.util.Set;
 
 public interface IngredientService {
 
-    Set<Ingredient> getIngredient();
+
 
     IngredientCommand findByRecipeIdAndIngredientId(long lr, long li);
 
-    IngredientCommand findCommandById(long l);
 
-    IngredientCommand saveRecipeCommand(IngredientCommand ingredientCommand);
 
-    void deleteById(long idToDelete);
+    IngredientCommand saveIngredientCommand(IngredientCommand ingredientCommand);
+
+
 }

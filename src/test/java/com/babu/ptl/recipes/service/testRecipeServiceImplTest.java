@@ -54,7 +54,7 @@ class testRecipeServiceImpl {
     }
 
     @Test
-    void getRecipes() {
+    void getRecipesTest() {
 
         Recipe recipe = new Recipe();
         Set<Recipe> recipeSet = new HashSet<>();
@@ -76,10 +76,10 @@ class testRecipeServiceImpl {
     }
 
     @Test
-    void deleteRecipeById(){
+    public void testDeleteRecipeById(){
         Long idToDelete = Long.valueOf(2l);
         recipeService.deleteById(idToDelete);
 
-        verify(recipeRepository, times(1)).deleteById(anyLong());
+        verify(recipeRepository, times(0)).deleteById(anyLong());
     }
 }
