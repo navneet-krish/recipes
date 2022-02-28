@@ -49,7 +49,7 @@ public class IngredientControllerTest {
         RecipeCommand recipeCommand = new RecipeCommand();
         when(recipeService.findCommandById(anyLong())).thenReturn(recipeCommand);
 
-        mockMvc.perform(get("/recipe/1/ingredients"))
+        mockMvc.perform(get("/recipe/1/ingredient"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("recipe/ingredient/list"))
                 .andExpect(model().attributeExists("recipe"));
@@ -95,7 +95,7 @@ public class IngredientControllerTest {
                   .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("id","")
                 .param("description","some string")
-        ).andExpect(status().is3xxRedirection())
+                 ).andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/recipe/2/ingredient/3/show"));
 
     }

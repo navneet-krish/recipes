@@ -8,12 +8,14 @@ import com.babu.ptl.recipes.domain.Recipe;
 import com.babu.ptl.recipes.repositories.RecipeRepository;
 import com.babu.ptl.recipes.repositories.UnitOfMeasureRepository;
 import com.babu.ptl.recipes.service.recipeservice.IngredientService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Optional;
 import java.util.Set;
 
+@Slf4j
 @Service
 public class IngredientServiceImpl implements IngredientService {
 
@@ -55,12 +57,18 @@ public class IngredientServiceImpl implements IngredientService {
     @Override
     @Transactional
     public IngredientCommand saveIngredientCommand(IngredientCommand ingredientCommand) {
+
+        log.debug("saved recipe id:" + ingredientCommand.getRecipeId());
+
         Optional<Recipe> recipeOptional = recipeRepository.findById(ingredientCommand.getRecipeId());
+
         if(recipeOptional.isEmpty()){
-            //log error
+            log.debug("Recipeid is not found");
             return new IngredientCommand();
         } else {
             Recipe recipe = recipeOptional.get();
+
+            log.debug("Recipeid is found. id is " + recipe.getId());
 
             Optional<Ingredient> ingredientOptional = recipe
                     .getIngredients()
