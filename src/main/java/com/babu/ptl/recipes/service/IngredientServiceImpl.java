@@ -11,6 +11,7 @@ import com.babu.ptl.recipes.service.recipeservice.IngredientService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import javax.transaction.Transactional;
 import java.util.Optional;
 import java.util.Set;
@@ -84,15 +85,29 @@ public class IngredientServiceImpl implements IngredientService {
                         .findById(ingredientCommand.getUom().getId())
                         .orElseThrow(() -> new RuntimeException("UOM NOT FOUND")));
             } else {
-                recipe.addIngredient(ingredientCommandToIngredient.convert(ingredientCommand));
+
+                Ingredient ingredient = ingredientCommandToIngredient.convert(ingredientCommand);
+                ingredient.setRecipe(recipe);
+                recipe.addIngredient(ingredient);
+
             }
 
             Recipe savedRecipe = recipeRepository.save(recipe);
 
-            return ingredientToIngredientCommand.convert(savedRecipe.getIngredients().stream()
+            Optional<Ingredient> savedIngredient = savedRecipe.getIngredients().stream()
                     .filter(recipeIngredients -> recipeIngredients.getId().equals(ingredientCommand.getId()))
-                    .findFirst()
-                    .get());
+                    .findFirst();
+
+            if (!savedIngredient.isPresent()){
+
+                savedIngredient = savedRecipe.getIngredients().stream()
+                        .filter(recipeIngredients -> recipeIngredients.getAmount().equals(ingredientCommand.getAmount()))
+                        .filter(recipeIngredients -> recipeIngredients.getDescription().equals(ingredientCommand.getDescription()))
+                        .filter(recipeIngredients -> recipeIngredients.getUom().getId().equals(ingredientCommand.getUom().getId()))
+                        .findFirst();
+            }
+
+            return ingredientToIngredientCommand.convert(savedIngredient.get());
         }
 
 

@@ -1,6 +1,8 @@
 package com.babu.ptl.recipes.controller;
 
 import com.babu.ptl.recipes.commands.IngredientCommand;
+import com.babu.ptl.recipes.commands.RecipeCommand;
+import com.babu.ptl.recipes.commands.UnitOfMeasureCommand;
 import com.babu.ptl.recipes.service.recipeservice.IngredientService;
 import com.babu.ptl.recipes.service.recipeservice.RecipeService;
 import com.babu.ptl.recipes.service.recipeservice.UnitOfMeasureService;
@@ -62,5 +64,22 @@ public class IngredientController {
         log.debug("saved ingredient id:" + savedCommand.getId());
 
         return "redirect:/recipe/" + savedCommand.getRecipeId() + "/ingredient/" + savedCommand.getId() + "/show";
+    }
+
+    @GetMapping
+    @RequestMapping("/recipe/{recipeid}/ingredient/new")
+    public String newRecipeIngredient(@PathVariable String recipeid, Model model){
+
+        RecipeCommand recipeCommand = recipeService.findCommandById(Long.valueOf(recipeid));
+
+        IngredientCommand ingredientCommand = new IngredientCommand();
+        ingredientCommand.setRecipeId(Long.valueOf(recipeid));
+
+        model.addAttribute("ingredient", ingredientCommand);
+
+        ingredientCommand.setUom(new UnitOfMeasureCommand());
+        model.addAttribute("uomList",unitOfMeasureService.listAllUoms() );
+
+        return "recipe/ingredient/ingredientform";
     }
 }
